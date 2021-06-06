@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Pang</title>
+</head>
+<body>
+<a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a><hr>
+<div style="text-align: right" th:if="${!check}">
+    <button style="position: relative;  padding:5px 10px; font-size: 5px;" onclick="location.href='loginform'">로그인</button>
+</div><br>
+<div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
+<div style="text-align: right" th:if="${check}">
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
+</div>
+<button style="position: relative; left:600px; padding: 10px 60px; font-size: 25px;" onclick="location.href='itemlist'">상품 리스트</button>
+<button style="position: relative; left:800px; padding: 10px 60px; font-size: 25px;" onclick="location.href='board'">QnA 게시판</button>
+<button style="position: relative; left:950px; top:500px; padding: 5px 30px; font-size: 25px;" onclick="location.href=''">관리자 페이지</button>
+
+
+</body>
+</html>

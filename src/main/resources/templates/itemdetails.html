@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Pang</title>
+</head>
+<body>
+<a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a><hr>
+<div style="text-align: right" th:if="${!check}">
+    <button style="position: relative;  padding:5px 10px; font-size: 5px;" onclick="location.href='loginform'">로그인</button>
+</div><br>
+<div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
+<div style="text-align: right" th:if="${check}">
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
+</div>
+<table border="1" style="width: 30%; height: 100px; margin: auto; text-align: center">
+<tbody>
+    <tr>
+        <td>제목</td>
+        <td th:text="${book.getName()}"></td>
+    </tr>
+    <tr>
+        <td>저자</td>
+        <td th:text="${book.getAuthor()}"></td>
+    </tr>
+    <tr>
+        <td>가격</td>
+        <td th:text="${book.getPrice()}"></td>
+    </tr>
+    <tr>
+        <td>재고</td>
+        <td th:text="${book.getQuantity()}"></td>
+    </tr>
+    <tr th:height="150">
+        <td>내용</td>
+        <td th:text="${book.getContent()}"></td>
+    </tr>
+</tbody>
+</table>
+<br><br>
+<div style="position: relative; left: 1300px">
+    <span>주문하기</span>
+    <form method="post" action="/order">
+        <input th:name="count" type="number" min="1" th:max="${book.getQuantity()}" step="1" th:placeholder="1">
+        <input type="submit" value="주문하기">
+    </form>
+</div>
+
+</body>
+</html>

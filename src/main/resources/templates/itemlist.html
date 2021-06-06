@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Pang</title>
+</head>
+<body>
+<a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a><hr>
+<div style="text-align: right" th:if="${!check}">
+    <button style="position: relative;  padding:5px 10px; font-size: 5px;" onclick="location.href='loginform'">로그인</button>
+</div><br>
+<div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
+<div style="text-align: right" th:if="${check}">
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
+</div>
+<table border="1" style="width: 60%; height: 100px; margin: auto; text-align: center">
+    <thead>
+    <tr>
+        <td>번호</td>
+        <td width="550">책 제목</td>
+        <td width="250">저자</td>
+        <td>가격</td>
+        <td>재고</td>
+    </tr>
+    </thead>
+    <tbody >
+    <tr th:each="books : ${book}">
+        <td th:text="${booksStat.index+1+10*(page-1)}"></td>
+        <td width="550"><a th:href="@{/book/details(id=${books.getId()})}" th:text="${books.getName()}"></a></td>
+        <td width="250" th:text="${books.getAuthor()}"></td>
+        <td th:text="${books.getPrice()}"></td>
+        <td th:text="${books.getQuantity()}"></td>
+    </tr>
+    </tbody>
+</table>
+<br>
+
+<div style="text-align: center">
+    <table style="margin: auto; text-align: center">
+        <tr th:with="count=${count}">
+            <td th:each="m : ${#numbers.sequence(1,count)}" >
+                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/book/page(page=${m})}" th:text="${m}"></a>
+            </td>
+        </tr>
+    </table>
+    <form action="/search/book" method="get">
+        검색: <input type="text" name="search">
+        <input type="submit" value="검색">
+    </form>
+</div>
+
+
+</body>
+</html>
