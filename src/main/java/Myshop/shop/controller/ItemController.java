@@ -2,10 +2,14 @@ package Myshop.shop.controller;
 
 import Myshop.shop.config.auth.PrincipalDetails;
 import Myshop.shop.entity.Book;
-import Myshop.shop.entity.Post;
+import Myshop.shop.entity.Order;
 import Myshop.shop.entity.User;
 import Myshop.shop.repository.BookRepository;
+import Myshop.shop.repository.OrderRepository;
 import Myshop.shop.repository.UserRepository;
+import Myshop.shop.service.BookService;
+import Myshop.shop.service.OrderService;
+import Myshop.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +29,14 @@ public class ItemController {
     BookRepository bookRepository;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    BookService bookService;
+    @Autowired
+    OrderRepository orderRepository;
+    @Autowired
+    OrderService orderService;
+    @Autowired
+    UserService userService;
 
     @GetMapping("/itemlist")
     public String itemlist(@AuthenticationPrincipal PrincipalDetails userDetails, Model model){
@@ -68,11 +79,29 @@ public class ItemController {
 
     }
     @PostMapping("/order")
-    public String order(@AuthenticationPrincipal PrincipalDetails userDetails,int count){
-        Long id = userDetails.getUser().getId();
-        User user = userRepository.findById(id).get();
+    public String order(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,int count){
+        Long userid = userDetails.getUser().getId();
+        User user = userRepository.findById(userid).get();
+        Book book = bookService.sellbook(id, count);
+        Order order = new Order(count);
+        order.setPrice(book.getPrice()*count);
+        orderService.join(order,book);
+        userService.addorder(order,user);
+        return "redirect:/itemlist";
+    }
+    @GetMapping("/myorderlist")
+    public String orderlist(@AuthenticationPrincipal PrincipalDetails userDetails,Model model){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e){
+            model.addAttribute("check",false);
+        }
+        User user = userRepository.findById(userDetails.getUser().getId()).get();
+        List<Order> byUser = orderRepository.findByUser(user);
 
-
+        model.addAttribute("ol",byUser);
+        return "myorderlist";
     }
 
 }

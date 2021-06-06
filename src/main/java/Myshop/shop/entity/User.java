@@ -18,6 +18,7 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_id")
     private Long id;
+
     private String name;
     private String address;
     private String userid;
@@ -48,6 +49,7 @@ public class User {
     public void addorder(Order order){
         this.orderList.add(order);
         order.setUser(this);
+
     }
 
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order extends BaseTime{
+public class Order{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="order_id")
@@ -23,11 +23,20 @@ public class Order extends BaseTime{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
+
 
     private int count;
     private int price;
+    public Order(int count){
+        this.count=count;
+    }
 
-
-
+    public void setBook(Book book) {
+        this.book = book;
+        book.getOrderList().add(this);
+    }
 }

@@ -1,5 +1,6 @@
 package Myshop.shop.service;
 
+import Myshop.shop.entity.Order;
 import Myshop.shop.entity.User;
 import Myshop.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,12 @@ public class UserService {
         String pwd = user.getPassword();
         String enpwd =bCryptPasswordEncoder.encode(pwd);
         user.setPassword(enpwd);
-        user.setProvider("local");
-        user.setProviderid("local");
         userRepository.save(user);
     }
+    public void addorder(Order order,User user){
+        user.addorder(order);
+    }
+
 
 
 }

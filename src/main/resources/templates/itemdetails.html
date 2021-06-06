@@ -12,6 +12,7 @@
 <div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='myorderlist'">나의 주문</button>
 </div>
 <table border="1" style="width: 30%; height: 100px; margin: auto; text-align: center">
 <tbody>
@@ -43,6 +44,7 @@
     <form method="post" action="/order">
         <input th:name="count" type="number" min="1" th:max="${book.getQuantity()}" step="1" th:placeholder="1">
         <input type="submit" value="주문하기">
+        <input type="hidden" th:name="id" th:value="${book.getId()}"/>
     </form>
 </div>
 

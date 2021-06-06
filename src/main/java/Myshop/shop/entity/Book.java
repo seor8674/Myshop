@@ -2,8 +2,11 @@ package Myshop.shop.entity;
 
 import lombok.Data;
 import lombok.Getter;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,7 +22,8 @@ public class Book {
     private int price;
     private int quantity;
 
-    @OneToOne
+    @OneToMany(mappedBy = "book")
+    List<Order> orderList = new ArrayList<>();
 
 
 }
