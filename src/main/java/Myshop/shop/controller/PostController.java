@@ -158,7 +158,50 @@ public class PostController {
         return "search";
 
     }
+    @GetMapping("/mypost")
+    public String mypage(@AuthenticationPrincipal PrincipalDetails userDetails,Model model) {
+        try {
+            model.addAttribute("name", userDetails.getUser().getName());
+            model.addAttribute("check", true);
+        } catch (NullPointerException e) {
+            model.addAttribute("check", false);
+        }
+        String username = userDetails.getUsername();
+        User byUserid = userRepository.findByUserid(username);
+        List<Post> postList = byUserid.getPostList();
+        model.addAttribute("post",postList);
 
+        return "mypost";
+    }
+    @GetMapping("/mypost/update")
+    public String mypageupdate(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,Model model) {
+        try {
+            model.addAttribute("name", userDetails.getUser().getName());
+            model.addAttribute("check", true);
+        } catch (NullPointerException e) {
+            model.addAttribute("check", false);
+        }
+        model.addAttribute("id",id);
+
+        return "mypostupdate";
+    }
+    @PostMapping("/mypost/update")
+    public String myupdate(Long id,String title,String content,Model model){
+        postService.update(id,title,content);
+
+        return "redirect:/mypost";
+    }
+    @GetMapping("/mypost/delete")
+    public String mypagedelete(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,Model model) {
+        try {
+            model.addAttribute("name", userDetails.getUser().getName());
+            model.addAttribute("check", true);
+        } catch (NullPointerException e) {
+            model.addAttribute("check", false);
+        }
+        postService.delete(id);
+        return "redirect:/mypost";
+    }
 
 
 }

@@ -12,8 +12,8 @@
 <div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='myorderlist'">나의 주문</button>
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='mypost'">내가쓴글</button>
+
 </div>
 <table border="1" style="width: 60%; height: 100px; margin: auto; text-align: center">
     <thead>
@@ -23,6 +23,7 @@
         <td width="250">글쓴이</td>
         <td>작성일자</td>
         <td >조회수</td>
+        <td>삭제</td>
     </tr>
     </thead>
     <tbody >
@@ -32,22 +33,21 @@
         <td width="250" th:text="${posts.getUser().getUserid()}"></td>
         <td th:text="${posts.getLastmodifiedDate()}"></td>
         <td th:text="${posts.getHit()}"></td>
+        <td><a th:href="@{/admin/board/delete(id=${posts.getId()})}" th:text="삭제"></a> </td>
     </tr>
     </tbody>
 </table>
 <br>
-<div>
-    <button style="position: relative; left: 1500px;  padding:10px 15px; font-size: 15px;" onclick="location.href='/register'">글쓰기</button>
-</div>
+
 <div style="text-align: center">
     <table style="margin: auto; text-align: center">
         <tr th:with="count=${count}">
             <td th:each="m : ${#numbers.sequence(1,count)}" >
-                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/board/page(page=${m})}" th:text="${m}"></a>
+                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/admin/board/page(page=${m})}" th:text="${m}"></a>
             </td>
         </tr>
     </table>
-    <form action="/search" method="get">
+    <form action="/admin/search" method="get">
         검색: <input type="text" name="search">
         <input type="submit" value="검색">
     </form>

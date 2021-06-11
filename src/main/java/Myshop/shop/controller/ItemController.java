@@ -3,6 +3,7 @@ package Myshop.shop.controller;
 import Myshop.shop.config.auth.PrincipalDetails;
 import Myshop.shop.entity.Book;
 import Myshop.shop.entity.Order;
+import Myshop.shop.entity.Post;
 import Myshop.shop.entity.User;
 import Myshop.shop.repository.BookRepository;
 import Myshop.shop.repository.OrderRepository;
@@ -102,6 +103,65 @@ public class ItemController {
 
         model.addAttribute("ol",byUser);
         return "myorderlist";
+    }
+    @GetMapping("/search/book")
+    public String searchbook(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e){
+            model.addAttribute("check",false);
+        }
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<Book> byNameContaining = bookRepository.findByNameContaining(search, pageRequest);
+        List<Book> content = byNameContaining.getContent();
+        model.addAttribute("search",search);
+        model.addAttribute("book",content);
+        model.addAttribute("page",1);
+        model.addAttribute("count",byNameContaining.getTotalPages());
+
+        return "searchbook";
+    }
+    @GetMapping("/book/page")
+    public String pages(@AuthenticationPrincipal PrincipalDetails userDetails,int page,Model model){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e) {
+            model.addAttribute("check", false);
+        }
+
+        PageRequest pageRequest = PageRequest.of(page-1, 10);
+        Page<Book> all = bookRepository.findAll(pageRequest);
+        List<Book> content = all.getContent();
+        model.addAttribute("book",content);
+        model.addAttribute("page",page);
+        if(all.getTotalPages()==0){
+            model.addAttribute("count",1);
+        }
+        else{
+            model.addAttribute("count",all.getTotalPages());
+        }
+
+        return "itemlist";
+    }
+    @GetMapping("/search/book/page")
+    public String searchbookpage(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model,int page){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e){
+            model.addAttribute("check",false);
+        }
+        PageRequest pageRequest = PageRequest.of(page-1, 10);
+        Page<Book> byNameContaining = bookRepository.findByNameContaining(search, pageRequest);
+        List<Book> content = byNameContaining.getContent();
+        model.addAttribute("search",search);
+        model.addAttribute("book",content);
+        model.addAttribute("page",page);
+        model.addAttribute("count",byNameContaining.getTotalPages());
+
+        return "searchbook";
     }
 
 }

@@ -19,40 +19,37 @@
     <thead>
     <tr>
         <td>번호</td>
-        <td width="550">제목</td>
-        <td width="250">글쓴이</td>
-        <td>작성일자</td>
-        <td >조회수</td>
+        <td width="550">책 제목</td>
+        <td width="250">저자</td>
+        <td>가격</td>
+        <td>재고</td>
     </tr>
     </thead>
     <tbody >
-    <tr th:each="posts : ${post}">
-        <td th:text="${postsStat.index+1+10*(page-1)}"></td>
-        <td width="550"><a th:href="@{/post/details(id=${posts.getId()})}" th:text="${posts.getTitle()}"></a></td>
-        <td width="250" th:text="${posts.getUser().getUserid()}"></td>
-        <td th:text="${posts.getLastmodifiedDate()}"></td>
-        <td th:text="${posts.getHit()}"></td>
+    <tr th:each="books : ${book}">
+        <td th:text="${booksStat.index+1+10*(page-1)}"></td>
+        <td width="550"><a th:href="@{/book/details(id=${books.getId()})}" th:text="${books.getName()}"></a></td>
+        <td width="250" th:text="${books.getAuthor()}"></td>
+        <td th:text="${books.getPrice()}"></td>
+        <td th:text="${books.getQuantity()}"></td>
     </tr>
     </tbody>
 </table>
 <br>
-<div>
-    <button style="position: relative; left: 1500px;  padding:10px 15px; font-size: 15px;" onclick="location.href='/register'">글쓰기</button>
-</div>
+
 <div style="text-align: center">
     <table style="margin: auto; text-align: center">
         <tr th:with="count=${count}">
             <td th:each="m : ${#numbers.sequence(1,count)}" >
-                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/board/page(page=${m})}" th:text="${m}"></a>
+                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/search/book/page(page=${m},search=${search})}" th:text="${m}"></a>
             </td>
         </tr>
     </table>
-    <form action="/search" method="get">
+    <form action="/search/book" method="get">
         검색: <input type="text" name="search">
         <input type="submit" value="검색">
     </form>
 </div>
-
 
 
 </body>

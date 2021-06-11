@@ -12,18 +12,11 @@
 <div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='myorderlist'">나의 주문</button>
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='mypost'">내가쓴글</button>
 </div>
-<div style="width: 60%; height: 100px; margin: auto; text-align: center">
+<button style="position: relative; left:600px; padding: 10px 60px; font-size: 25px;" onclick="location.href='admin/itemlist'">상품 리스트 관리</button>
+<button style="position: relative; left:800px; padding: 10px 60px; font-size: 25px;" onclick="location.href='admin/board'">QnA 게시판 관리</button>
 
-    <form action="/register" method="post">
-        제목:<input type="text" name="title" placeholder="title"><br><br><br>
-        내용:<textarea name="content" placeholder="content" cols="50" rows="10"></textarea><br>
-        <input  type="submit" value="등록">
-    </form>
-
-</div>
 
 
 </body>

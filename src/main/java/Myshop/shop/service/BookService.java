@@ -17,4 +17,7 @@ public class BookService {
         book.setQuantity(book.getQuantity()-count);
         return book;
     }
+    public void register(Book book){
+        bookRepository.save(book);
+    }
 }

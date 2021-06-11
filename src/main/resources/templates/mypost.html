@@ -23,35 +23,24 @@
         <td width="250">글쓴이</td>
         <td>작성일자</td>
         <td >조회수</td>
+        <td>수정</td>
+        <td>삭제</td>
     </tr>
     </thead>
     <tbody >
     <tr th:each="posts : ${post}">
-        <td th:text="${postsStat.index+1+10*(page-1)}"></td>
+        <td th:text="${postsStat.index+1}"></td>
         <td width="550"><a th:href="@{/post/details(id=${posts.getId()})}" th:text="${posts.getTitle()}"></a></td>
         <td width="250" th:text="${posts.getUser().getUserid()}"></td>
         <td th:text="${posts.getLastmodifiedDate()}"></td>
         <td th:text="${posts.getHit()}"></td>
+        <td><a th:href="@{/mypost/update(id=${posts.getId()})}" th:text="수정"></a> </td>
+        <td><a th:href="@{/mypost/delete(id=${posts.getId()})}" th:text="삭제"></a> </td>
     </tr>
     </tbody>
 </table>
 <br>
-<div>
-    <button style="position: relative; left: 1500px;  padding:10px 15px; font-size: 15px;" onclick="location.href='/register'">글쓰기</button>
-</div>
-<div style="text-align: center">
-    <table style="margin: auto; text-align: center">
-        <tr th:with="count=${count}">
-            <td th:each="m : ${#numbers.sequence(1,count)}" >
-                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/board/page(page=${m})}" th:text="${m}"></a>
-            </td>
-        </tr>
-    </table>
-    <form action="/search" method="get">
-        검색: <input type="text" name="search">
-        <input type="submit" value="검색">
-    </form>
-</div>
+
 
 
 

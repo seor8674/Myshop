@@ -18,4 +18,13 @@ public class PostService {
         post.addHit();
         return post;
     }
+    public void delete(Long id){
+        postRepository.deleteById(id);
+
+    }
+    public void update(Long id,String title,String content){
+        Post post = postRepository.findById(id).get();
+        post.setTitle(title);
+        post.setContent(content);
+    }
 }
