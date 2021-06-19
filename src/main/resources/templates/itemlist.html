@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Pang</title>
+    <link th:href="@{main.css}" rel="stylesheet"/>
 </head>
-<body>
-<a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a><hr>
+<body style="background-color: tan">
+<div style="background: linear-gradient( to right, aquamarine, khaki ); border: 1px ridge black; margin-bottom: 3px; padding: 0px">
+    <a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a>
+</div>
 <div style="text-align: right" th:if="${!check}">
     <button style="position: relative;  padding:5px 10px; font-size: 5px;" onclick="location.href='loginform'">로그인</button>
 </div><br>
-<div style="text-align: right" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
+<div style="text-align: right; font-size: large; font-weight: bold" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='myorderlist'">나의 주문</button>
@@ -17,7 +20,7 @@
 </div>
 <table border="1" style="width: 60%; height: 100px; margin: auto; text-align: center">
     <thead>
-    <tr>
+    <tr style="background-color: aqua; font-family: Georgia, serif">
         <td>번호</td>
         <td width="550">책 제목</td>
         <td width="250">저자</td>
@@ -26,7 +29,7 @@
     </tr>
     </thead>
     <tbody >
-    <tr th:each="books : ${book}">
+    <tr style="background-color: antiquewhite" th:each="books : ${book}">
         <td th:text="${booksStat.index+1+10*(page-1)}"></td>
         <td width="550"><a th:href="@{/book/details(id=${books.getId()})}" th:text="${books.getName()}"></a></td>
         <td width="250" th:text="${books.getAuthor()}"></td>
