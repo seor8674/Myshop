@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Book Pang</title>
 </head>
-<body style="background-color: tan">
+<body style="background-color: aqua">
 <div style="background: linear-gradient( to right, aquamarine, khaki ); border: 1px ridge black; margin-bottom: 3px; padding: 0px">
     <a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a>
 </div>
@@ -13,8 +13,8 @@
 </div><br>
 <div style="text-align: right; font-size: large; font-weight: bold" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='mypost'">내가쓴글</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/logout'">로그아웃</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/mypost'">내가쓴글</button>
 </div>
 <table border="1" style="width: 60%; height: 100px; margin: auto; text-align: center">
     <thead>

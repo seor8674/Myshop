@@ -20,4 +20,16 @@ public class BookService {
     public void register(Book book){
         bookRepository.save(book);
     }
+    public void update(Long id,Book book){
+        Book book1 = bookRepository.findById(id).get();
+        book1.setQuantity(book.getQuantity());
+        book1.setAuthor(book.getAuthor());
+        book1.setPrice(book.getPrice());
+        book1.setContent(book.getContent());
+        book1.setName(book.getName());
+    }
+    public void delete(Long id){
+        Book book = bookRepository.findById(id).get();
+        bookRepository.delete(book);
+    }
 }

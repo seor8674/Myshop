@@ -3,7 +3,6 @@ package Myshop.shop.controller;
 import Myshop.shop.config.auth.PrincipalDetails;
 import Myshop.shop.entity.Book;
 import Myshop.shop.entity.Order;
-import Myshop.shop.entity.Post;
 import Myshop.shop.entity.User;
 import Myshop.shop.repository.BookRepository;
 import Myshop.shop.repository.OrderRepository;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ItemController {
+public class BookController {
 
     @Autowired
     BookRepository bookRepository;
@@ -39,7 +38,7 @@ public class ItemController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/itemlist")
+    @GetMapping("/booklist")
     public String itemlist(@AuthenticationPrincipal PrincipalDetails userDetails, Model model){
         try{
             model.addAttribute("name",userDetails.getUser().getName());
@@ -61,7 +60,7 @@ public class ItemController {
             model.addAttribute("count",all.getTotalPages());
         }
 
-        return "itemlist";
+        return "booklist";
 
     }
     @GetMapping("/book/details")
@@ -76,7 +75,7 @@ public class ItemController {
         Book book = byId.get();
         model.addAttribute("book",book);
 
-        return "itemdetails";
+        return "bookdetails";
 
     }
     @PostMapping("/order")
@@ -88,7 +87,7 @@ public class ItemController {
         order.setPrice(book.getPrice()*count);
         orderService.join(order,book);
         userService.addorder(order,user);
-        return "redirect:/itemlist";
+        return "redirect:/booklist";
     }
     @GetMapping("/myorderlist")
     public String orderlist(@AuthenticationPrincipal PrincipalDetails userDetails,Model model){
@@ -143,7 +142,7 @@ public class ItemController {
             model.addAttribute("count",all.getTotalPages());
         }
 
-        return "itemlist";
+        return "booklist";
     }
     @GetMapping("/search/book/page")
     public String searchbookpage(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model,int page){
@@ -162,6 +161,18 @@ public class ItemController {
         model.addAttribute("count",byNameContaining.getTotalPages());
 
         return "searchbook";
+    }
+    @GetMapping("/cancle")
+    public String cancleorder(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,Model model){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e){
+            model.addAttribute("check",false);
+        }
+        orderService.delete(id);
+
+        return "redirect:/myorderlist";
     }
 
 }

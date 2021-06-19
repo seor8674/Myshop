@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Pang</title>
-    <link th:href="@{main.css}" rel="stylesheet"/>
 </head>
-<body style="background-color: tan">
+<body style="background-color: aqua">
 <div style="background: linear-gradient( to right, aquamarine, khaki ); border: 1px ridge black; margin-bottom: 3px; padding: 0px">
     <a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a>
 </div>
@@ -14,9 +13,8 @@
 </div><br>
 <div style="text-align: right; font-size: large; font-weight: bold" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='myorderlist'">나의 주문</button>
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='mypost'">내가쓴글</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/logout'">로그아웃</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/mypost'">내가쓴글</button>
 </div>
 <table border="1" style="width: 60%; height: 100px; margin: auto; text-align: center">
     <thead>
@@ -26,6 +24,8 @@
         <td width="250">저자</td>
         <td>가격</td>
         <td>재고</td>
+        <td>수정</td>
+        <td>삭제</td>
     </tr>
     </thead>
     <tbody >
@@ -35,20 +35,24 @@
         <td width="250" th:text="${books.getAuthor()}"></td>
         <td th:text="${books.getPrice()}"></td>
         <td th:text="${books.getQuantity()}"></td>
+        <td><a th:href="@{/admin/book/update(id=${books.getId()})}" th:text="수정"></a> </td>
+        <td><a th:href="@{/admin/book/delete(id=${books.getId()})}" th:text="삭제"></a> </td>
     </tr>
     </tbody>
 </table>
 <br>
-
+<div>
+    <button style="position: relative; left: 1500px;  padding:10px 15px; font-size: 15px;" onclick="location.href='/admin/book/register'">신규 등록</button>
+</div>
 <div style="text-align: center">
     <table style="margin: auto; text-align: center">
         <tr th:with="count=${count}">
             <td th:each="m : ${#numbers.sequence(1,count)}" >
-                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/book/page(page=${m})}" th:text="${m}"></a>
+                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/admin/book/page(page=${m})}" th:text="${m}"></a>
             </td>
         </tr>
     </table>
-    <form action="/search/book" method="get">
+    <form action="/admin/search/book" method="get">
         검색: <input type="text" name="search">
         <input type="submit" value="검색">
     </form>

@@ -3,7 +3,6 @@ package Myshop.shop.controller;
 import Myshop.shop.config.auth.PrincipalDetails;
 import Myshop.shop.entity.Book;
 import Myshop.shop.entity.Post;
-import Myshop.shop.entity.User;
 import Myshop.shop.repository.BookRepository;
 import Myshop.shop.repository.PostRepository;
 import Myshop.shop.service.BookService;
@@ -134,7 +133,7 @@ public class AdminController {
         return "adminsearch";
 
     }
-    @GetMapping("/admin/itemlist")
+    @GetMapping("/admin/booklist")
     public String itemlist(@AuthenticationPrincipal PrincipalDetails userDetails, Model model){
         try{
             model.addAttribute("name",userDetails.getUser().getName());
@@ -156,7 +155,7 @@ public class AdminController {
             model.addAttribute("count",all.getTotalPages());
         }
 
-        return "adminitemlist";
+        return "adminbooklist";
 
     }
     @GetMapping("/admin/book/register")
@@ -172,7 +171,7 @@ public class AdminController {
     @PostMapping("/admin/book/register")
     public String itemregister(Book book){
         bookService.register(book);
-        return "redirect:/admin/itemlist";
+        return "redirect:/admin/booklist";
     }
     @GetMapping("/admin/book/page")
     public String pages(@AuthenticationPrincipal PrincipalDetails userDetails,int page,Model model){
@@ -195,7 +194,66 @@ public class AdminController {
             model.addAttribute("count",all.getTotalPages());
         }
 
-        return "adminitemlist";
+        return "adminbooklist";
+    }
+    @GetMapping("/admin/search/book")
+    public String adminsearchbook(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e) {
+            model.addAttribute("check", false);
+        }
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<Book> byNameContaining = bookRepository.findByNameContaining(search, pageRequest);
+        List<Book> content = byNameContaining.getContent();
+        model.addAttribute("search",search);
+        model.addAttribute("book",content);
+        model.addAttribute("page",1);
+        model.addAttribute("count",byNameContaining.getTotalPages());
+
+        return "adminsearchbook";
+    }
+    @GetMapping("/admin/search/book/page")
+    public String adminsearchbookpage(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model,int page){
+        try{
+            model.addAttribute("name",userDetails.getUser().getName());
+            model.addAttribute("check",true);
+        }catch (NullPointerException e){
+            model.addAttribute("check",false);
+        }
+        PageRequest pageRequest = PageRequest.of(page-1, 10);
+        Page<Book> byNameContaining = bookRepository.findByNameContaining(search, pageRequest);
+        List<Book> content = byNameContaining.getContent();
+        model.addAttribute("search",search);
+        model.addAttribute("book",content);
+        model.addAttribute("page",page);
+        model.addAttribute("count",byNameContaining.getTotalPages());
+
+        return "adminsearchbook";
+    }
+    @GetMapping("/admin/book/update")
+    public String updataitem(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model,Long id){
+        try {
+            model.addAttribute("name", userDetails.getUser().getName());
+            model.addAttribute("check", true);
+        } catch (NullPointerException e) {
+            model.addAttribute("check", false);
+        }
+        model.addAttribute("id",id);
+        return "bookupdate";
+    }
+    @PostMapping("/admin/book/update")
+    public String update(Long id,Book book){
+        bookService.update(id,book);
+        return "redirect:/admin/booklist";
+    }
+    @GetMapping("/admin/book/delete")
+    public String delete(@AuthenticationPrincipal PrincipalDetails userDetails,Long id){
+        bookService.delete(id);
+
+        return "redirect:/admin/booklist";
+
     }
 
 

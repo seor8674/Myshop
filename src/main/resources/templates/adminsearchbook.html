@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Book Pang</title>
 </head>
-<body style="background-color: tan">
+<body style="background-color: aqua">
 <div style="background: linear-gradient( to right, aquamarine, khaki ); border: 1px ridge black; margin-bottom: 3px; padding: 0px">
     <a href="/" style="text-align: center; font-size: 40px; color:blue" ><h1>Book Pang</h1></a>
 </div>
@@ -13,8 +13,8 @@
 </div><br>
 <div style="text-align: right; font-size: large; font-weight: bold" th:if="${check}" th:text="${name}+'님 환영합니다!'"></div>
 <div style="text-align: right" th:if="${check}">
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='logout'">로그아웃</button>
-    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='mypost'">내가쓴글</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/logout'">로그아웃</button>
+    <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/mypost'">내가쓴글</button>
 </div>
 <table border="1" style="width: 60%; height: 100px; margin: auto; text-align: center">
     <thead>
@@ -35,8 +35,8 @@
         <td width="250" th:text="${books.getAuthor()}"></td>
         <td th:text="${books.getPrice()}"></td>
         <td th:text="${books.getQuantity()}"></td>
-        <td><a th:href="@{admin/item/update(id=${books.getId()})}" th:text="수정"></a> </td>
-        <td><a th:href="@{admin/item/delete(id=${books.getId()})}" th:text="삭제"></a> </td>
+        <td><a th:href="@{/admin/book/update(id=${books.getId()})}" th:text="수정"></a> </td>
+        <td><a th:href="@{/admin/book/delete(id=${books.getId()})}" th:text="삭제"></a> </td>
     </tr>
     </tbody>
 </table>
@@ -48,7 +48,7 @@
     <table style="margin: auto; text-align: center">
         <tr th:with="count=${count}">
             <td th:each="m : ${#numbers.sequence(1,count)}" >
-                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/admin/book/page(page=${m})}" th:text="${m}"></a>
+                <a th:style="${m==page ? 'font-weight:bold ;':'font-weight:normal' }" th:href="@{/admin/search/book/page(page=${m},search=${search})}" th:text="${m}"></a>
             </td>
         </tr>
     </table>
