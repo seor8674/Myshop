@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,6 +21,9 @@ public class Post extends BaseTime{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    List<Comment> commentList =new ArrayList<>();
 
     private int hit;
     private String title;

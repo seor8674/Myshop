@@ -5,6 +5,7 @@ import Myshop.shop.entity.Post;
 import Myshop.shop.entity.User;
 import Myshop.shop.repository.PostRepository;
 import Myshop.shop.repository.UserRepository;
+import Myshop.shop.service.CommentService;
 import Myshop.shop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,8 @@ public class PostController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("/board")
     public String page(@AuthenticationPrincipal PrincipalDetails userDetails,Model model){
@@ -116,9 +119,19 @@ public class PostController {
         post.addHit();
         model.addAttribute("title",post.getTitle());
         model.addAttribute("content",post.getContent());
+        model.addAttribute("id",id);
+        Post post1 = postRepository.findById(id).get();
+        model.addAttribute("comment",post1.getCommentList());
 
         return "details";
 
+    }
+    @PostMapping("/comment")
+    public String comment(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,String content){
+        String name = userDetails.getUser().getName();
+        commentService.regist(id,name,content);
+
+        return "redirect:/post/details?id="+id;
     }
     @GetMapping("/search")
     public String search(@AuthenticationPrincipal PrincipalDetails userDetails,String search, Model model){

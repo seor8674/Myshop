@@ -22,15 +22,37 @@
     <table border="1" style="width: 30%; height: 100px; margin: auto; text-align: center; font-weight: bold;font-size: medium">
         <tbody>
         <tr>
-            <td>제목</td>
+            <td width="100">제목</td>
             <td th:text="${title}"></td>
         </tr>
         <tr th:height="100px">
-            <td>내용</td>
+            <td width="100">내용</td>
             <td th:text="${content}"></td>
         </tr>
         </tbody>
     </table>
+    <br><br>
+
+    <table border="1" style="width: 30%; height: 100px; margin: auto; text-align: center; font-weight: bold;font-size: medium">
+        <tr><td colspan="3">댓글</td></tr>
+        <tr>
+            <td width="550">내용</td>
+            <td width="250">작성자</td>
+            <td width="300">작성일자</td>
+        </tr>
+        <tr th:each="comments : ${comment}">
+            <td th:text="${comments.getContent()}"></td>
+            <td th:text="${comments.getUsername()}"></td>
+            <td th:text="${comments.getCreatedDate()}"></td>
+        </tr>
+    </table>
+    <br><br>
+    <form action="/comment" method="post" >
+        <textarea name="content" placeholder="댓글을 입력하세요." cols="60" rows="2"></textarea>
+        <input type="hidden" th:value="${id}" name="id">
+        <input type="submit" value="댓글 등록">
+    </form>
+
 
 </div>
 
