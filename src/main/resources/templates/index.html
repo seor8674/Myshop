@@ -18,7 +18,11 @@
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/logout'">로그아웃</button>
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/myorderlist'">나의 주문</button>
     <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/mypost'">내가쓴글</button>
+    <div th:if="${address}">
+        <button style="position: relative;  padding:5px 10px; font-size: 8px;" onclick="location.href='/address'">주소 등록</button>
+    </div>
 </div>
+
 <button style="position: relative; left:600px; padding: 10px 60px; font-size: 25px;" onclick="location.href='booklist'">상품 리스트</button>
 <button style="position: relative; left:800px; padding: 10px 60px; font-size: 25px;" onclick="location.href='board'">QnA 게시판</button>
 <button style="position: relative; left:950px; top:500px; padding: 5px 30px; font-size: 25px;" onclick="location.href='admin'">관리자 페이지</button>

@@ -4,17 +4,19 @@ import Myshop.shop.entity.Book;
 import Myshop.shop.entity.Order;
 import Myshop.shop.repository.BookRepository;
 import Myshop.shop.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class OrderService {
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    BookRepository bookRepository;
+
+    private final OrderRepository orderRepository;
+
+    private final BookRepository bookRepository;
 
     public void join(Order order, Book book){
         order.setBook(book);

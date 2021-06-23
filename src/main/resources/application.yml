@@ -12,6 +12,23 @@ spring:
       hibernate:
         # show_sql: true
         format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 511320062324-q9o929lmlu4sa7oe50q28rtjckc20q2k.apps.googleusercontent.com
+            client-secret: IYzXj09W4VV4JeYb8pbkijCP
+            scope:
+              - email
+              - profile
+          facebook:
+            client-id: 185247876767670
+            client-secret: 3bb7c81e7c01c7e34950a1eb654067f2
+            scope:
+              - email
+              - public_profile
+
 
 
 logging.level:

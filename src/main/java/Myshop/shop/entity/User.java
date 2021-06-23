@@ -25,6 +25,10 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private String provider;
+    private String providerid;
+
+
 
     public User(String name, String address, String userid, String password,String email) {
         this.name = name;
@@ -38,6 +42,19 @@ public class User {
         else{
             this.role="ROLE_USER";
         }
+        this.provider="local";
+        this.providerid="local";
+    }
+
+    public User(String name, String userid, String password, String email, String role, String provider, String providerid) {
+        this.name = name;
+        this.userid = userid;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.provider = provider;
+        this.providerid = providerid;
+        this.address=null;
     }
 
     @OneToMany(mappedBy = "user")

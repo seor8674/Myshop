@@ -3,6 +3,7 @@ package Myshop.shop.service;
 import Myshop.shop.entity.Order;
 import Myshop.shop.entity.User;
 import Myshop.shop.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
+    private final UserRepository userRepository;
 
     public void join(User user){
         String pwd = user.getPassword();
@@ -28,6 +30,9 @@ public class UserService {
         user.addorder(order);
     }
 
-
+    public void setadd(String userid,String address){
+        User byUserid = userRepository.findByUserid(userid);
+        byUserid.setAddress(address);
+    }
 
 }

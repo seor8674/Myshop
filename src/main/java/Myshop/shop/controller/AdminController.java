@@ -8,6 +8,7 @@ import Myshop.shop.repository.PostRepository;
 import Myshop.shop.service.BookService;
 import Myshop.shop.service.PostService;
 import Myshop.shop.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,18 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired
-    UserService userService;
-    @Autowired
-    PostRepository postRepository;
-    @Autowired
-    PostService postService;
-    @Autowired
-    BookRepository bookRepository;
-    @Autowired
-    BookService bookService;
+    private final UserService userService;
+    private final PostRepository postRepository;
+    private final PostService postService;
+    private final BookRepository bookRepository;
+    private final BookService bookService;
 
 
     @GetMapping("/admin")

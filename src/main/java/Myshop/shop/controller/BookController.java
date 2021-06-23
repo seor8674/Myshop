@@ -10,6 +10,7 @@ import Myshop.shop.repository.UserRepository;
 import Myshop.shop.service.BookService;
 import Myshop.shop.service.OrderService;
 import Myshop.shop.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,26 +24,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class BookController {
 
-    @Autowired
-    BookRepository bookRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    BookService bookService;
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    UserService userService;
+    private final BookRepository bookRepository;
+    private final UserRepository userRepository;
+    private final BookService bookService;
+    private final OrderRepository orderRepository;
+    private final OrderService orderService;
+    private final UserService userService;
 
     @GetMapping("/booklist")
     public String itemlist(@AuthenticationPrincipal PrincipalDetails userDetails, Model model){
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -68,6 +70,12 @@ public class BookController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -94,6 +102,12 @@ public class BookController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -108,6 +122,12 @@ public class BookController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -126,6 +146,12 @@ public class BookController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e) {
             model.addAttribute("check", false);
         }
@@ -149,6 +175,12 @@ public class BookController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -164,14 +196,7 @@ public class BookController {
     }
     @GetMapping("/cancle")
     public String cancleorder(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,Model model){
-        try{
-            model.addAttribute("name",userDetails.getUser().getName());
-            model.addAttribute("check",true);
-        }catch (NullPointerException e){
-            model.addAttribute("check",false);
-        }
         orderService.delete(id);
-
         return "redirect:/myorderlist";
     }
 

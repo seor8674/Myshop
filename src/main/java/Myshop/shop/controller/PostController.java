@@ -7,6 +7,7 @@ import Myshop.shop.repository.PostRepository;
 import Myshop.shop.repository.UserRepository;
 import Myshop.shop.service.CommentService;
 import Myshop.shop.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,24 +23,27 @@ import java.util.List;
 import java.util.Scanner;
 
 @Controller
+@RequiredArgsConstructor
 public class PostController {
 
-    @Autowired
-    PostService postService;
+    private final PostService postService;
 
-    @Autowired
-    PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    CommentService commentService;
+    private final UserRepository userRepository;
+    private final CommentService commentService;
 
     @GetMapping("/board")
     public String page(@AuthenticationPrincipal PrincipalDetails userDetails,Model model){
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e) {
             model.addAttribute("check", false);
         }
@@ -64,6 +68,12 @@ public class PostController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e) {
             model.addAttribute("check", false);
         }
@@ -89,6 +99,12 @@ public class PostController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -112,6 +128,12 @@ public class PostController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -138,6 +160,12 @@ public class PostController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -156,6 +184,12 @@ public class PostController {
         try{
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         }catch (NullPointerException e){
             model.addAttribute("check",false);
         }
@@ -176,6 +210,12 @@ public class PostController {
         try {
             model.addAttribute("name", userDetails.getUser().getName());
             model.addAttribute("check", true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         } catch (NullPointerException e) {
             model.addAttribute("check", false);
         }
@@ -191,6 +231,12 @@ public class PostController {
         try {
             model.addAttribute("name", userDetails.getUser().getName());
             model.addAttribute("check", true);
+            if(userDetails.getUser().getAddress()==null){
+                model.addAttribute("address",true);
+            }
+            else{
+                model.addAttribute("address",false);
+            }
         } catch (NullPointerException e) {
             model.addAttribute("check", false);
         }
@@ -206,12 +252,6 @@ public class PostController {
     }
     @GetMapping("/mypost/delete")
     public String mypagedelete(@AuthenticationPrincipal PrincipalDetails userDetails,Long id,Model model) {
-        try {
-            model.addAttribute("name", userDetails.getUser().getName());
-            model.addAttribute("check", true);
-        } catch (NullPointerException e) {
-            model.addAttribute("check", false);
-        }
         postService.delete(id);
         return "redirect:/mypost";
     }
