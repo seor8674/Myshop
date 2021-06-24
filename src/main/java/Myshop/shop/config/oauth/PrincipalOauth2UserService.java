@@ -39,7 +39,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String userid = provider + "_" + providerid;
         String username = oAuth2Userinfo.getName();
         String password = bCryptPasswordEncoder.encode("이환준");//의미없음
-        String Role = "ROLE_MEMBER";
+        String Role = "ROLE_USER";
         User user;
         User byUserid = userRepository.findByUserid(userid);
         if(byUserid==null){

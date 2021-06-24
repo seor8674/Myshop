@@ -34,5 +34,14 @@ public class UserService {
         User byUserid = userRepository.findByUserid(userid);
         byUserid.setAddress(address);
     }
+    public boolean getadd(Long id){
+        User user = userRepository.findById(id).get();
+        if(user.getAddress()==null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 }

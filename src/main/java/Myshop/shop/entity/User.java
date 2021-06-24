@@ -69,5 +69,17 @@ public class User {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", userid='" + userid + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", provider='" + provider + '\'' +
+                ", providerid='" + providerid + '\'' +
+                '}';
+    }
 }

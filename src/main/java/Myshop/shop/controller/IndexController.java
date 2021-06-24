@@ -21,12 +21,14 @@ public class IndexController {
     @GetMapping("/")
     public String home(@AuthenticationPrincipal PrincipalDetails userDetails, Model model){
         try{
-            if(userDetails.getUser().getAddress()==null){
+            if(userService.getadd(userDetails.getUser().getId())){
                 model.addAttribute("address",true);
             }
             else{
                 model.addAttribute("address",false);
+
             }
+
             model.addAttribute("name",userDetails.getUser().getName());
             model.addAttribute("check",true);
 
